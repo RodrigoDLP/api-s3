@@ -8,7 +8,11 @@ def lambda_handler(event, context):
     s3 = boto3.client('s3')
     s3.create_bucket(Bucket=nombre_bucket, ACL='public-read')
 
-    #Desactivación de bloqueo a ACL (instrucción pedida a IA)
+    #Desactivación de bloqueo a ACL y ownership controls 
+    #(instrucciones pedidas a IA debido a errores)
+    s3.put_bucket_ownership_controls(
+        Bucket=nombre_bucket, OwnershipControls={'Rules': [{'ObjectOwnership': 'ObjectWriter'}]})
+
     s3.put_public_access_block(
     Bucket=nombre_bucket,
     PublicAccessBlockConfiguration={
@@ -16,8 +20,9 @@ def lambda_handler(event, context):
         'IgnorePublicAcls': False,
         'BlockPublicPolicy': False,
         'RestrictPublicBuckets': False
-    }
-    )
+    })
+    s3.put_bucket_acl(Bucket=nombre_bucket, ACL='public-read')
+
     
     # Salida
     return {
