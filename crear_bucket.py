@@ -6,7 +6,7 @@ def lambda_handler(event, context):
     
     # Proceso
     s3 = boto3.client('s3')
-    s3.create_bucket(Bucket=nombre_bucket)
+    s3.create_bucket(Bucket=nombre_bucket, ACL='public-read')
 
     #Desactivación de bloqueo a ACL (instrucción pedida a IA)
     s3.put_public_access_block(
@@ -18,8 +18,7 @@ def lambda_handler(event, context):
         'RestrictPublicBuckets': False
     }
     )
-    s3.put_bucket_acl(Bucket=nombre_bucket, ACL='public-read')
-
+    
     # Salida
     return {
         'statusCode': 200,
