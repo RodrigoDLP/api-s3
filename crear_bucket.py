@@ -3,9 +3,9 @@ import boto3
 def lambda_handler(event, context):
     # Entrada (json)
     nombre_bucket = event['body']['bucket']
-
+    
     # Proceso
-    s3 = boto3.client('s3', region_name='us-east-1') #botaba error sin region_name
+    s3 = boto3.client('s3')
     s3.create_bucket(Bucket=nombre_bucket)
 
     #Desactivación de bloqueo a ACL (instrucción pedida a IA)
