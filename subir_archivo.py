@@ -18,7 +18,8 @@ def lambda_handler(event, context):
         nombre_archivo = c + nombre_archivo        
     full_key = key_directorio + nombre_archivo
 
-    s3.upload_file(Filename=ruta, Bucket=nombre_bucket, Key=full_key)
+    s3.upload_file(Filename=ruta, Bucket=nombre_bucket, Key=full_key, 
+        ExtraArgs={'ACL': 'public-read'})
     
     # Salida
     return {
