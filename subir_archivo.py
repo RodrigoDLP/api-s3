@@ -8,7 +8,7 @@ def upload_base_64_to_s3(s3_bucket_name, s3_file_name, base_64_str):
     s3.Object(s3_bucket_name, s3_file_name).put(Body=base64.b64decode(base_64_str))
     return (s3_bucket_name, s3_file_name)
 
-def lambda_handler(event, context);
+def lambda_handler(event, context):
     nombre_bucket = event['body']['bucket']
     filePath = event['body']['filePath']
     fileContent = event['body']['fileContent']
